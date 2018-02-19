@@ -35,9 +35,8 @@ def main():
             res = requests.post('https://hooks.slack.com/services/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',
                 data=json.dumps({
                     'username': 'tickerbot',
-                    'icon_emoji': ':male-technologist:',
-                    'text': '*' + str(market) + ' report*: _HIGH_ :arrow_double_up: : ' + str(high) +
-                    ' _LOW_ :arrow_double_down: : ' + str(low) + ' _VOLUME_ :truck: : ' + str(volume),
+                    'icon_emoji': ':female-technologist:',
+                    'text': '*' + str(market) + ' report*: :arrow_up_small: :' + '{:.8f}'.format(high) + ' :arrow_down_small: : ' + '{:.8f}'.format(low) + ':signal_strength: : ' + '{:.8f}'.format(volume),
                 }), headers={'Content-Type': 'application/json'})
             if res.status_code != 200:
                 print(res.text)

@@ -36,7 +36,7 @@ def main():
                 data=json.dumps({
                     'username': 'tickerbot',
                     'icon_emoji': ':female-technologist:',
-                    'text': '*' + str(market) + ' report*: :arrow_up_small: :' + '{:.8f}'.format(high) + ' :arrow_down_small: : ' + '{:.8f}'.format(low) + ':signal_strength: : ' + '{:.8f}'.format(volume),
+                    'text': '*' + str(market) + ' report*: :arrow_up_small: :' + '{:.8f}'.format(high) + ' :arrow_down_small: : ' + '{:.8f}'.format(low) + ' :signal_strength: : ' + '{:.8f}'.format(volume),
                 }), headers={'Content-Type': 'application/json'})
             if res.status_code != 200:
                 print(res.text)

@@ -30,22 +30,23 @@ def main():
         def on_open(self):
             self.ticker_updates_container = {}
 
+        def notify_slack(self, market, high, low, volume):
+            print(str(market) + ': ' + str(high) + ', ' + str(low) + ', ' + str(volume))
+            res = requests.post('https://hooks.slack.com/services/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',
+                data=json.dumps({
+                    'username': 'tickerbot',
+                    'icon_emoji': ':moneybag:',
+                    'text': str(market) + ' report:\nHIGH: ' + str(high) +
+                    '\nLOW: ' + str(low) + '\nVOLUME: ' + str(volume),
+                }), headers={'Content-Type': 'application/json'})
+            if res.status_code != 200:
+                print(res.text)
+
         def on_ticker_update(self, msg):
             name = msg['MarketName']
             if name not in self.ticker_updates_container:
                 self.ticker_updates_container[name] = msg
-                # Print to slack
-
-        def notify_slack(url, title):
-            print(url + ' | ' + title)
-            res = requests.post('https://hooks.slack.com/services/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',
-                data=json.dumps({
-                    'username': 'tickerbot',
-                    'icon_emoji': ':moneybag:',
-                    'text': '',
-                }), headers={'Content-Type': 'application/json'})
-            if res.status_code != 200:
-                print(res.text)
+                self.notify_slack(name, msg['High'], msg['Low'], msg['Volume'])
 
     # Create the socket instance
     ws = MySocket()
